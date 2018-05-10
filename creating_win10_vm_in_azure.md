@@ -12,29 +12,29 @@ In the Azure Portal Search Box, search for "windows 10".
 ## 3. Configure VM 
 ![](./assets/2018-05-10-20-52-01.png)
 
-## 3. Configure Basic Settings and Click OK
+## 4. Configure Basic Settings and Click OK
 ![](./assets/2018-05-10-21-00-17.png)
 
-## 4. Select VM Size
+## 5. Select VM Size
 ![](./assets/2018-05-10-21-06-47.png)
 
-## 5. Set Auto Shutdown Schedule for VM    
+## 6. Set Auto Shutdown Schedule for VM    
 This is to prevent unnecessary expenses.
 ![](./assets/2018-05-10-21-20-51.png)
 
-## 6. Click Create
+## 7. Click Create
 ![](./assets/2018-05-10-21-23-20.png)
 
-## 7. Monitor VM Deployment   
+## 8. Monitor VM Deployment   
 Go back to the Azure Portal Search Box
 ![](./assets/2018-05-11-00-15-42.png)
 
 ![](./assets/2018-05-11-00-22-24.png)
-## 8. Ensure that the VM is running
+## 9. Ensure that the VM is running
 ![](./assets/2018-05-11-01-10-01.png)
 ![](./assets/2018-05-11-01-19-00.png)
 
-## 9. Connect to the VM via Remote Desktop
+## 10. Connect to the VM via Remote Desktop
 ![](./assets/2018-05-11-01-25-58.png)
 
 From Windows 10, Launch "Remote Desktop Connection".    
@@ -55,3 +55,9 @@ https://www.youtube.com/watch?v=nmzXb63kw9Y
  
 If you're connected successfully, the Windows Desktop will appear. You can then proceed to use it like a normal Windows machine.    
 ![](./assets/2018-05-11-01-55-19.png)
+
+
+## Starting and Stopping the VM    
+In the Azure Portal Search Box, search for your VM.
+![](./assets/2018-05-11-02-03-09.png)    
+![](./assets/2018-05-11-02-08-33.png)
