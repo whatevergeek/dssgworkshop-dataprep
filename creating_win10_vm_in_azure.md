@@ -56,6 +56,7 @@ https://www.youtube.com/watch?v=nmzXb63kw9Y
 If you're connected successfully, the Windows Desktop will appear. You can then proceed to use it like a normal Windows machine.    
 ![](./assets/2018-05-11-01-55-19.png)
 
+Note: If you have issue logging in with the VM credentials, it might be because of the password. Try changing your password and logging in again.
 
 ## Starting and Stopping the VM    
 In the Azure Portal Search Box, search for your VM.
