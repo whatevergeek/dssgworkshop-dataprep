@@ -11,7 +11,6 @@ In this workshop, you'll use Azure Machine Learning Workbench (preview) to learn
 > * Import, transform, and create a test dataset.
 > * Generate a data preparation package.
 > * Run the data preparation package by using Python.
-> * Generate a training dataset by reusing the data preparation package for additional input files.
 
 ## Data acquisition
 This workshop uses the [Boston hubway dataset](https://s3.amazonaws.com/hubway-data/index.html) and Boston weather data from [NOAA](http://www.noaa.gov/).
