@@ -88,11 +88,12 @@ This workshop uses the [Boston hubway dataset](https://s3.amazonaws.com/hubway-d
 
 1. **Data Store**: Select the data store that contains the data. Because you're using files, select **File(s)/Directory**. Select **Next** to continue.
 
-   ![File(s)/Directory entry](./assets/datasources.png)
+   ![File(s)/Directory entry](./assets/datasources2.png)
 
-2. **File Selection**: Add the weather data. Browse and select the `BostonWeather.csv` file that you uploaded to Blob Storage earlier. Select **Next**.
+2. **File Selection**: Add the weather data. Browse and select the `BostonWeather.csv` file that you downloaded earlier. Select **Next**.
 
-   ![File selection with BostonWeather.csv selected](./assets/azureblobpickweatherdatafile.png)
+   ![File selection with BostonWeather.csv selected](./assets/localpickweatherdatafile.png)
+
 
 3. **File Details**: Verify the file schema that is detected. Machine Learning Workbench analyzes the data in the file and infers the schema to use.
 
@@ -385,7 +386,7 @@ You have finished preparing the weather data. Next, prepare the trip data.
 
 1. To import the `201701-hubway-tripdata.csv` file, use the steps in the [Create a new data source](#newdatasource) section. Use the following options during the import process:
 
-    * __File Selection__: Select **Azure Blob** when you browse to select the file.
+    * __File Selection__: Select **Local** when you browse to select the file.
 
     * __Sampling Scheme__: Select **Full File** sampling scheme, and make the sample active.
 
@@ -595,7 +596,7 @@ To join the weather data with the trip data, use the following steps:
 
 ## Read data from Python
 
-You can run a data preparation package from Python or PySpark and retrieve the result as a **Data Frame**.
+You can run a data preparation package from Python and retrieve the result as a **Data Frame**.
 
 To generate an example Python script, right-click __BikeShare Data Prep__, and select __Generate Data Access Code File__. The example Python file is created in your **Project Folder** and is also loaded in a tab within Workbench. The following Python script is an example of the code that is generated:
 
@@ -616,131 +617,7 @@ df = package.run('BikeShare Data Prep.dprep', dataflow_idx=0)
 df.head(10)
 ```
 
-For this workshop, the name of the file is `BikeShare Data Prep.py`. This file is used later in the workshop.
 
-## Save test data as a CSV file
-
-To save the **Join Result** dataflow to a .csv file, you must change the `BikeShare Data Prep.py` script. 
-
-1. Open the project for editing in Visual Studio Code.
-
-    ![Open project in Visual Studio Code](./assets/openprojectinvscode.png)
-
-2. Update the Python script in the `BikeShare Data Prep.py` file by using the following code:
-
-    ```python
-    import pyspark
-
-    from azureml.dataprep.package import run
-    from pyspark.sql.functions import *
-
-    # start Spark session
-    spark = pyspark.sql.SparkSession.builder.appName('BikeShare').getOrCreate()
-
-    # dataflow_idx=2 sets the dataflow to the 3rd dataflow (the index starts at 0), the Join Result.
-    df = run('BikeShare Data Prep.dprep', dataflow_idx=2)
-    df.show(n=10)
-    row_count_first = df.count()
-
-    # Example file name: 'wasb://data-files@bikesharestorage.blob.core.windows.net/testata'
-    # 'wasb://<your container name>@<your azure storage name>.blob.core.windows.net/<csv folder name>
-    blobfolder = 'Your Azure Storage blob path'
-
-    df.write.csv(blobfolder, mode='overwrite') 
-
-    # retrieve csv file parts into one data frame
-    csvfiles = "<Your Azure Storage blob path>/*.csv"
-    df = spark.read.option("header", "false").csv(csvfiles)
-    row_count_result = df.count()
-    print(row_count_result)
-    if (row_count_first == row_count_result):
-        print('counts match')
-    else:
-        print('counts do not match')
-    print('done')
-    ```
-
-3. Replace `Your Azure Storage blob path` with the path to the output file to be created. Replace for both the `blobfolder` and `csvfiles` variables.
-
-
-## Substitute data sources
-
-In the previous steps, you used the `201701-hubway-tripdata.csv` and `BostonWeather.csv` data sources to prepare the test data. To use the package with the other trip data files, use the following steps:
-
-1. Create a new data source by using the steps given previously, with the following changes to the process:
-
-    * __File Selection__: When you select a file, multi-select the six remaining trip tripdata .csv files.
-
-    ![Load six remaining files](./assets/browseazurestoragefortripdatafiles.png)
-
-    > [!NOTE]
-     > The __+5__ entry indicates that there are five additional files beyond the one that is listed.
-
-    * __File Details__: Set __Promote Headers Mode__ to **All Files Have The Same Headers**. This value indicates that each of the files contains the same header.
-
-    ![File details selection](./assets/headerfromeachfile.png) 
-
-   Save the name of this data source because it's used in later steps.
-
-2. Select the folder icon to view the files in your project. Expand the __aml\_config__ directory, and then select the `hdinsight.runconfig` file.
-
-    ![Location of hdinsight.runconfig](./assets/hdinsightsubstitutedatasources.png) 
-
-3. Select the **Edit** button to open the file in Visual Studio Code.
-
-4. Add the following lines at the end of the `hdinsight.runconfig` file, and then select the disk icon to save the file.
-
-    ```yaml
-    DataSourceSubstitutions:
-      201701-hubway-tripdata.dsource: 201501-hubway-tripdata.dsource
-    ```
-
-    This change replaces the original data source with the one that contains the six trip data files.
-
-## Save training data as a CSV file
-
-1. Browse to the Python file `BikeShare Data Prep.py` that you edited previously. Provide a different file path to save the training data.
-
-    ```python
-    import pyspark
-
-    from azureml.dataprep.package import run
-    from pyspark.sql.functions import *
-
-    # start Spark session
-    spark = pyspark.sql.SparkSession.builder.appName('BikeShare').getOrCreate()
-
-    # dataflow_idx=2 sets the dataflow to the 3rd dataflow (the index starts at 0), the Join Result.
-    df = run('BikeShare Data Prep.dprep', dataflow_idx=2)
-    df.show(n=10)
-    row_count_first = df.count()
-
-    # Example file name: 'wasb://data-files@bikesharestorage.blob.core.windows.net/traindata'
-    # 'wasb://<your container name>@<your azure storage name>.blob.core.windows.net/<csv folder name>
-    blobfolder = 'Your Azure Storage blob path'
-
-    df.write.csv(blobfolder, mode='overwrite') 
-
-    # retrieve csv file parts into one data frame
-    csvfiles = "<Your Azure Storage blob path>/*.csv"
-    df = spark.read.option("header", "false").csv(csvfiles)
-    row_count_result = df.count()
-    print(row_count_result)
-    if (row_count_first == row_count_result):
-        print('counts match')
-    else:
-        print('counts do not match')
-    print('done')
-    ```
-
-2. Use the folder named `traindata` for the training data output.
-
-3. To submit a new job, select **Run**. Make sure **hdinsight** is selected. A job is submitted with the new configuration. The output of this job is the training data. This data is created by using the same data preparation steps that you followed previously. The job might take a few minutes to finish.
-
-
-## Clean up resources
-
-[!INCLUDE [aml-delete-resource-group](../../../includes/aml-delete-resource-group.md)]
 
 ## Summary
 You have finished the bike-share data preparation workshop. In this workshop, you used Machine Learning Workbench (preview) to learn how to:
@@ -749,6 +626,5 @@ You have finished the bike-share data preparation workshop. In this workshop, yo
 > * Import, transform, and create a test dataset.
 > * Generate a data preparation package.
 > * Run the data preparation package by using Python.
-> * Generate a training dataset by reusing the data preparation package for additional input files.
 
 

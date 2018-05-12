@@ -13,3 +13,4 @@ If you don't have a supported OS, you may create an Azure VM using the following
 - **Azure Machine Learning Workbench** - Follow the steps here to install the workbench application in your supported OS:  [Install Azure Machine Learning Workbench](/install-azure-ml-workbench.md)
 
 #### 2. Proceed with the Data Preparation Workshop    
+- [Data Preparation Workshop](/dataprep-workshop.md). 
