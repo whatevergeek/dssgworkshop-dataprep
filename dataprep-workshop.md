@@ -69,7 +69,7 @@ This workshop uses the [Boston hubway dataset](https://s3.amazonaws.com/hubway-d
 
 2. Create a new Machine Learning project. Select the **+** button on the **Projects** page, or select **File** > **New**.
 
-   * Use the **Bike Share** template.
+   * Use the **Blank Project** template.
 
    * Name your project **BikeShare**. 
 
