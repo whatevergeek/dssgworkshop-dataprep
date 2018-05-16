@@ -197,7 +197,7 @@ To return to the __Data__ view, select __Data__ in the upper left of the page.
 
 2. For this workshop, select a cell that contains the value `FM-15`. Then set the filter to **equals**.  Now the data is filtered to only return rows where the __REPORTTYPE__ is `FM-15`.
 
-   ![Filter dialog box](./assets/weatherfilterinfm15.png)
+   ![Filter dialog box](./assets/weatherfilterinFM15.png)
 
    > [!NOTE]
    > FM-15 is a type of Meteorological Terminal Aviation Routine (METAR) weather report. The FM-15 reports are empirically observed to be the most complete, with little missing data.
